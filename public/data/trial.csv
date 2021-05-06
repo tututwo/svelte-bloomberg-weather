@@ -1,0 +1,8 @@
+label,count,color
+Bankrupt,3,black
+In Debt,168,black
+Cleared Nothing,53,red
+Cleared less than $10,27,red
+Cleared $10-25,15,red
+Cleared $25-50,13,red
+Cleared $50 or more,13,red
