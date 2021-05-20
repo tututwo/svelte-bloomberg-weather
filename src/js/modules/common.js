@@ -1,24 +1,19 @@
 import { get } from 'svelte/store';
 import { data as dataStore } from './stores';
-import * as d3 from './d3';
+import * as d3 from 'd3';
 
-export const s3Path = '/bbg-gfx/graphics-data/bgreen-dashboard/master';
+export const s3Path = 'https://raw.githubusercontent.com/tututwo/svelte-bloomberg-weather/main/public';
 
 export const getDataFromStore = async ({
   key,
   path = s3Path,
   parseResponse
 }) => {
-  let data = get(dataStore)[key];
+  let data = get(dataStore)[key];// usually undefined
   if (!data) {
     const url = `${path}/${key}`;
     data = await fetch(url).then(parseResponse);
-    dataStore.update(obj => {
-      return {
-        ...obj,
-        [key]: data
-      };
-    });
+    dataStore.update(obj => {return {...obj,[key]: data}});
   }
   return data;
 };
