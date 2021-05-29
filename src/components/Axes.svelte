@@ -38,7 +38,10 @@
       const textStyle = `
         position: absolute;
         top: 100%;
-        left: ${percent}%
+        padding-top: 5px;
+        left: ${percent}%;
+        transform: translateX(-50%);
+        color: var(--tick-text-color, black)
 
       `
 
@@ -74,7 +77,9 @@
       const textStyle = `
         position: absolute;
         left: 100%;
-        top: ${percent}%
+        top: ${percent}%;
+        transform:translateY(-100%);
+        color: var(--tick-text-color, black)
       `
 
       return {
@@ -109,7 +114,7 @@
   }
 
 
-$: console.log(Object.keys(tickProps).map(key => ({type: key, tickPropsArray: tickProps[key]})))
+// $: console.log(Object.keys(tickProps).map(key => ({type: key, tickPropsArray: tickProps[key]})))
 
 </script>
 <style>

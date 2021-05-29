@@ -31,6 +31,7 @@
 
   import SVG from "./SVG.svelte"
   import Axes from "./Axes.svelte"
+  import ToolTips from "./Tooltips.svelte"
 
 // import Axes from "./Axes.svelte";
 /////////////// import data/////////////
@@ -74,12 +75,29 @@
   // year to x
   $: xScale = d3.scaleBand(d3.range(1879, 2022), [0, width])
   // value to y
-  $: yScale = d3.scaleLinear([-3, 2.5], [height, 0])
+  $: yScale = d3.scaleLinear([-2.5, 2.5], [height, 0])
   // value to x
   $: [valueMin, valueMax] = yScale.domain()
   $: colorScale = getColorScale({valueMin, valueMax})
 
   $: radius = xScale.bandwidth() / 3
+
+  // data
+  const xAccessor = d => +d.year;
+  const yAccessor = d => +d.value
+  $: voronoiData = data.map((d,i) => {
+
+    const x = xScale(xAccessor(d))
+    const y = yScale(yAccessor(d))
+    const year = xAccessor(d)
+    const value = yAccessor(d)
+    return {
+      x,
+      y,
+      year,
+      value
+    }
+  })
 
   // value to color, then gradient
 
@@ -98,7 +116,13 @@
     }
   }
 
-
+  // tooltip
+  let animationDidEnd = false
+  onMount(() => {
+    setTimeout(() => {
+      animationDidEnd = true;
+    }, 1000);
+  });
 </script>
 
   
@@ -115,26 +139,30 @@
     </SVG>
 
     <Axes config = {axisConfig}/>
+
+    {#if animationDidEnd}
+      <ToolTips 
+        data = {voronoiData}
+        {width}
+        {height}
+      />
+    {/if}
   </figure>
 
  
 
 <style>
-
+  /* 决定了画框的大小，画框的性质 */
   .chart-container {
     position: relative;
-    
-  }
-  /* 决定了画框的大小，画框的性质 */
-  figure {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 420px;
+    --tick-text-color: white; 
+    box-sizing: border-box;
+    height: 60vh;
     margin: 45px 60px 35px 4%;
-    user-select: none;
   }
+
+
+
 
 
 </style>
