@@ -26,10 +26,10 @@
 
 <script>
 
-  import {afterUpdate} from "svelte"
-  import * as d3 from "d3"
   import tooltip from "../js/modules/tooltip"
-  import tippy from "tippy.js"
+  import tippy,{followCursor} from "tippy.js"
+  import '../custom_theme/temperature.css'
+
 
   export let data = [];
   export let width;
@@ -72,7 +72,19 @@
   <svg>
     {#each polygons as {d_point,d}, i}
       <path
-        use:tooltip = {{content: d_point.year}}
+        use:tooltip = {{
+          content: `<div>
+                      <div class="value" style = "color: ${d_point.color}">${d_point.value}°C</div>
+                      <div>${d_point.year}</div>
+                    </div>`,
+          allowHTML: true,
+          followCursor: 'initial',
+          plugins: [followCursor],
+          delay: [0, 0],
+          duration: [100, 0], // duration 才是治理延迟，连城string的tooltip的
+          moveTransition: 'transform 0.1s ease-out',
+          theme: 'temperature'
+          }}
         
         {d} 
         />
@@ -105,4 +117,6 @@
     width: 100%;
     height: 100% 
   }
+
+
 </style>

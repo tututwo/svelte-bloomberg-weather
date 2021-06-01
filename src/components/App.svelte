@@ -93,11 +93,13 @@
     const y = yScale(yAccessor(d))
     const year = xAccessor(d)
     const value = yAccessor(d)
+    const color = colorScale(value);
     return {
       x,
       y,
       year,
-      value
+      value,
+      color
     }
   })
 
@@ -141,14 +143,14 @@
     </SVG>
 
     <Axes config = {axisConfig}/>
-<!-- 
+
     {#if animationDidEnd}
       <ToolTips 
         data = {voronoiData}
         {width}
         {height}
       />
-    {/if} -->
+    {/if}
   </figure>
 
  
@@ -165,5 +167,7 @@
   }
 
 
-
+	:global(body) {
+		background: black;
+	}
 </style>
