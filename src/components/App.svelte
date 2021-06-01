@@ -29,9 +29,11 @@
   import { gsap } from "gsap";
 
 
+
   import SVG from "./SVG.svelte"
   import Axes from "./Axes.svelte"
   import ToolTips from "./Tooltips.svelte"
+
 
 // import Axes from "./Axes.svelte";
 /////////////// import data/////////////
@@ -139,14 +141,14 @@
     </SVG>
 
     <Axes config = {axisConfig}/>
-
+<!-- 
     {#if animationDidEnd}
       <ToolTips 
         data = {voronoiData}
         {width}
         {height}
       />
-    {/if}
+    {/if} -->
   </figure>
 
  
@@ -159,9 +161,8 @@
     box-sizing: border-box;
     height: 60vh;
     margin: 45px 60px 35px 4%;
+    border-color: coral
   }
-
-
 
 
 

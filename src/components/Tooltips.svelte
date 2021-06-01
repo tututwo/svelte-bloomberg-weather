@@ -25,8 +25,11 @@
 </script>
 
 <script>
+
   import {afterUpdate} from "svelte"
   import * as d3 from "d3"
+  import tooltip from "../js/modules/tooltip"
+  import tippy from "tippy.js"
 
   export let data = [];
   export let width;
@@ -46,26 +49,21 @@
               d}
     })
   }
-  $: console.log(polygons)
+  // $: console.log(polygons)
 
 //////////////////////////// tooltip position////////////////////////////
-afterUpdate(() => {
-  if (parentRef) {
-    const voronoiChildren = parentRef.querySelectorAll('path')
-    // console.log(voronoiChildren)
-  } 
-})
+
 // closure
-const tooltip = d3.select("#tooltip")
-function onMouseEnter(d_point) {
-  const {x, y, year, value} = d_point
-  return ()=>{
-    tooltip.style("transform", `translate(${x}px, ${y}px)`)
-    const text = tooltip.select("#date")
-          .text("asd")
-    console.log(document.querySelector('#date'))
-  }
-}
+// const tooltip = d3.select("#tooltip")
+// function onMouseEnter(d_point) {
+//   const {x, y, year, value} = d_point
+//   return ()=>{
+//     tooltip.style("transform", `translate(${x}px, ${y}px)`)
+//     const text = tooltip.select("#date")
+//           .text("asd")
+//     console.log(document.querySelector('#date'))
+//   }
+// }
 
 //
 </script>
@@ -74,7 +72,7 @@ function onMouseEnter(d_point) {
   <svg>
     {#each polygons as {d_point,d}, i}
       <path
-        on:mouseenter = {onMouseEnter(d_point)}
+        use:tooltip = {{content: d_point.year}}
         
         {d} 
         />
